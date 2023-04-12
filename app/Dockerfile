@@ -20,7 +20,6 @@ FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye@sha256:1ee6094f44c6778
 RUN apt-get update && apt-get install -y binutils
 
 COPY ./app /app
-COPY ./gen/vehicle_model /vehicle_model
 
 # Remove this installation for Arm64 once staticx has a prebuilt wheel for Arm64
 RUN /bin/bash -c 'set -ex && \
@@ -36,8 +35,7 @@ RUN pip3 install --no-cache-dir pyinstaller \
     && pip3 install --no-cache-dir patchelf==0.17.0.0 \
     && pip3 install --no-cache-dir staticx \
     && pip3 install --no-cache-dir -r ./app/requirements.txt \
-    && pip3 install --no-cache-dir -r ./app/requirements-links.txt \
-    && pip3 install --no-cache-dir /vehicle_model
+    && pip3 install --no-cache-dir -r ./app/requirements-links.txt
 
 WORKDIR /app
 
